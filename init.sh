@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 进入 webhook 目录
-cd webhook
+cd webhooks
 
 # 安装依赖项
 npm install
