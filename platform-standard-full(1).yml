@@ -1,0 +1,137 @@
+# 创建入口文件。如平台入口文件为: platform-standard-full.yml
+
+name: platform-standard # [a-zA-Z0-9][a-zA-Z0-9_.-]+
+
+services:
+    influxdb:
+        image: 192.168.18.55/cari_standard_x86/td.auto.service.influxdb:1.8.0
+        container_name: cari-influxdb-standard # [a-zA-Z0-9][a-zA-Z0-9_.-]+
+        network_mode: "host"
+        restart: on-failure
+
+    nats:
+        image: 192.168.18.55/cari_standard_x86/td.auto.service.nats:1.0.1
+        container_name: cari-nats
+        environment:
+            - TZ=Asia/Shanghai
+        network_mode: "host"
+        restart: on-failure
+
+    mysql:
+        image: 192.168.18.55/cari_standard_x86/td.auto.service.mysql_standard_data:1.0.1
+        container_name: cari-mysql-standard
+        network_mode: "host"
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - ACCEPT_EULA=Y
+            - TZ=Asia/Shanghai
+        security_opt:
+            - seccomp:unconfined
+        restart: on-failure
+
+    nginx:
+        # image: 192.168.18.55/cari_standard_x86/td.auto.service.nginx:latest
+        image: cari-nginx-test:1.0.2
+        container_name: cari-nginx
+        environment:
+            - TZ=Asia/Shanghai
+        network_mode: "host"
+        restart: on-failure
+
+    authority:
+        image: 192.168.18.55/cari_standard_x86/td.auto.service.authority:1.0.2-wwwroot
+        container_name: cari-authority
+        environment:
+            - TZ=Asia/Shanghai
+        network_mode: "host"
+        restart: on-failure
+
+    resourcesmanager:
+        image: 192.168.18.55/cari_standard_x86/td.auto.service.resourcesmanager:1.1.0
+        container_name: cari-resourcesmanager
+        environment:
+            - TZ=Asia/Shanghai
+        network_mode: "host"
+        restart: on-failure
+
+    graph:
+        image: 192.168.18.55/cari_standard_x86/td.auto.service.graph:1.5.0
+        container_name: cari-graph
+        environment:
+            - TZ=Asia/Shanghai
+        network_mode: "host"
+        restart: on-failure
+
+    scriptengine:
+        image: 192.168.18.55/cari_standard_x86/td.auto.service.scriptengine:1.0.1
+        container_name: cari-scriptengine
+        environment:
+            - TZ=Asia/Shanghai
+        network_mode: "host"
+        restart: on-failure
+
+    hisdataapi:
+        image: 192.168.18.55/cari_standard_x86/td.auto.service.hisdataapi:1.0.1
+        container_name: cari-hisdataapi
+        environment:
+            - TZ=Asia/Shanghai
+        network_mode: "host"
+        restart: on-failure
+
+    opcua_server:
+        image: 192.168.18.55/cari_standard_x86/td.auto.service.opcua_server:1.0.5
+        container_name: cari-opcua_server
+        environment:
+            - TZ=Asia/Shanghai
+        network_mode: "host"
+        restart: on-failure
+
+    engine:
+        image: 192.168.18.55/cari_standard_x86/td.auto.service.engine:1.0.3
+        container_name: cari-engine
+        environment:
+            - HOST=192.168.3.191 # 修改为授权服务器IP
+            - TZ=Asia/Shanghai
+        volumes:
+            - /mnt/d/tmp:/app/logs:rw    
+        network_mode: "host"
+        restart: on-failure
+       
+
+    platform_ui:
+        image: 192.168.18.55/cari_standard_x86/td.auto.ui.platform:1.1.17
+        environment:
+            - TZ=Asia/Shanghai
+        container_name: cari-platform-ui
+        network_mode: "host"
+        restart: on-failure
+
+    report_ui:
+        image: 192.168.18.55/cari_standard_x86/td.auto.ui.report:1.0.8
+        environment:
+            - TZ=Asia/Shanghai
+        container_name: cari-report-ui
+        network_mode: "host"
+        restart: on-failure
+
+    orientation-ui:
+        image: 192.168.18.55/cari_standard_x86/td.auto.ui.orientation:1.0.5
+        environment:
+            - TZ=Asia/Shanghai
+        container_name: cari-orientation-ui
+        network_mode: "host"
+        restart: on-failure
+
+    mtcp-ui:
+        image: 192.168.18.55/cari_standard_x86/td.auto.ui.mtcp:1.0.2
+        environment:
+            - TZ=Asia/Shanghai
+        container_name: cari-mtcp-ui
+        network_mode: "host"
+        restart: on-failure
+
+# sudo docker compose -f platform-standard-full.yml up -d
+
+# sudo docker compose -f platform-standard-full.yml down -v
+
+# sudo docker compose -f platform-standard-full.yml stop
